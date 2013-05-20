@@ -33,6 +33,8 @@
 		4A17CF85174A4CE1009B4C83 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A17CF84174A4CE1009B4C83 /* ImageIO.framework */; };
 		4A17CF89174A4DAB009B4C83 /* RSOAuthEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A17CF88174A4DAB009B4C83 /* RSOAuthEngine.m */; };
 		4A17CF8C174A4E75009B4C83 /* RSFanFouEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A17CF8B174A4E75009B4C83 /* RSFanFouEngine.m */; };
+		4A17CF91174A7522009B4C83 /* FBDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A17CF90174A7522009B4C83 /* FBDemoViewController.m */; };
+		4A17CF94174A7E66009B4C83 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A17CF93174A7E66009B4C83 /* WebViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +82,10 @@
 		4A17CF88174A4DAB009B4C83 /* RSOAuthEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSOAuthEngine.m; sourceTree = "<group>"; };
 		4A17CF8A174A4E75009B4C83 /* RSFanFouEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSFanFouEngine.h; sourceTree = "<group>"; };
 		4A17CF8B174A4E75009B4C83 /* RSFanFouEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSFanFouEngine.m; sourceTree = "<group>"; };
+		4A17CF8F174A7522009B4C83 /* FBDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBDemoViewController.h; sourceTree = "<group>"; };
+		4A17CF90174A7522009B4C83 /* FBDemoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBDemoViewController.m; sourceTree = "<group>"; };
+		4A17CF92174A7E66009B4C83 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		4A17CF93174A7E66009B4C83 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,8 +140,7 @@
 		4A022DFC173FEDF50098B317 /* FanBa */ = {
 			isa = PBXGroup;
 			children = (
-				4A17CF8D174A4E7A009B4C83 /* FanFou */,
-				4A022E0E173FEDF60098B317 /* MainStoryboard.storyboard */,
+				4A17CF8D174A4E7A009B4C83 /* FanFou Demo */,
 				4A022DFD173FEDF50098B317 /* Supporting Files */,
 			);
 			path = FanBa;
@@ -213,7 +218,20 @@
 			path = RSOAuthEngine;
 			sourceTree = "<group>";
 		};
-		4A17CF8D174A4E7A009B4C83 /* FanFou */ = {
+		4A17CF8D174A4E7A009B4C83 /* FanFou Demo */ = {
+			isa = PBXGroup;
+			children = (
+				4A17CF8E174A7274009B4C83 /* FanFou */,
+				4A022E0E173FEDF60098B317 /* MainStoryboard.storyboard */,
+				4A17CF92174A7E66009B4C83 /* WebViewController.h */,
+				4A17CF93174A7E66009B4C83 /* WebViewController.m */,
+				4A17CF8F174A7522009B4C83 /* FBDemoViewController.h */,
+				4A17CF90174A7522009B4C83 /* FBDemoViewController.m */,
+			);
+			name = "FanFou Demo";
+			sourceTree = "<group>";
+		};
+		4A17CF8E174A7274009B4C83 /* FanFou */ = {
 			isa = PBXGroup;
 			children = (
 				4A17CF8A174A4E75009B4C83 /* RSFanFouEngine.h */,
@@ -303,6 +321,8 @@
 				4A17CF7E174A32AE009B4C83 /* Reachability.m in Sources */,
 				4A17CF89174A4DAB009B4C83 /* RSOAuthEngine.m in Sources */,
 				4A17CF8C174A4E75009B4C83 /* RSFanFouEngine.m in Sources */,
+				4A17CF91174A7522009B4C83 /* FBDemoViewController.m in Sources */,
+				4A17CF94174A7E66009B4C83 /* WebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

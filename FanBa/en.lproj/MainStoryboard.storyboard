@@ -1,9 +1,129 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="12D78" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="S01-5L-1QH">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
-    <scenes/>
+    <scenes>
+        <!--Demo View Controller-->
+        <scene sceneID="tRJ-H3-ELj">
+            <objects>
+                <viewController id="S01-5L-1QH" customClass="FBDemoViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ueF-pD-jt1">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hJP-ws-LtD">
+                                <items>
+                                    <navigationItem title="饭霸Demo" id="3dc-dH-fYp">
+                                        <barButtonItem key="rightBarButtonItem" title="发送" id="FKb-iO-a97">
+                                            <connections>
+                                                <action selector="sendTweet:" destination="S01-5L-1QH" id="Yku-tn-kby"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fHF-YT-fQa">
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="还没登录" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WCW-tB-SKV">
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="21" id="dik-aZ-HDw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstItem="WCW-tB-SKV" firstAttribute="top" secondItem="fHF-YT-fQa" secondAttribute="top" constant="7" id="Qch-Vf-L8G"/>
+                                    <constraint firstItem="WCW-tB-SKV" firstAttribute="leading" secondItem="fHF-YT-fQa" secondAttribute="leading" type="default" id="S4B-2t-EAc"/>
+                                    <constraint firstItem="WCW-tB-SKV" firstAttribute="trailing" secondItem="fHF-YT-fQa" secondAttribute="trailing" type="default" id="SPH-a2-BLl"/>
+                                </constraints>
+                            </view>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k5Q-f0-5JA">
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="372" id="tCu-2Y-uRc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="k5Q-f0-5JA" firstAttribute="top" secondItem="fHF-YT-fQa" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="2bG-rZ-J2n"/>
+                            <constraint firstItem="k5Q-f0-5JA" firstAttribute="leading" secondItem="ueF-pD-jt1" secondAttribute="leading" type="default" id="4ts-5E-VVn"/>
+                            <constraint firstItem="k5Q-f0-5JA" firstAttribute="trailing" secondItem="ueF-pD-jt1" secondAttribute="trailing" type="default" id="BqQ-bD-1B7"/>
+                            <constraint firstItem="hJP-ws-LtD" firstAttribute="leading" secondItem="ueF-pD-jt1" secondAttribute="leading" type="default" id="HVC-Uq-64X"/>
+                            <constraint firstItem="fHF-YT-fQa" firstAttribute="top" secondItem="hJP-ws-LtD" secondAttribute="bottom" type="default" id="ZCO-sf-7T3"/>
+                            <constraint firstItem="fHF-YT-fQa" firstAttribute="leading" secondItem="ueF-pD-jt1" secondAttribute="leading" type="default" id="a3R-yU-8DY"/>
+                            <constraint firstItem="fHF-YT-fQa" firstAttribute="trailing" secondItem="ueF-pD-jt1" secondAttribute="trailing" type="default" id="qj7-VG-pCJ"/>
+                            <constraint firstItem="hJP-ws-LtD" firstAttribute="top" secondItem="ueF-pD-jt1" secondAttribute="top" type="default" id="uLH-8O-Ub0"/>
+                            <constraint firstItem="hJP-ws-LtD" firstAttribute="trailing" secondItem="ueF-pD-jt1" secondAttribute="trailing" type="default" id="x3n-UZ-3oZ"/>
+                            <constraint firstItem="k5Q-f0-5JA" firstAttribute="bottom" secondItem="ueF-pD-jt1" secondAttribute="bottom" type="default" id="x4A-ZD-u3Y"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="sendButton" destination="FKb-iO-a97" id="4jp-iW-OYB"/>
+                        <outlet property="statusLabel" destination="WCW-tB-SKV" id="pzK-f3-2kw"/>
+                        <outlet property="textView" destination="k5Q-f0-5JA" id="Hmc-QK-C7r"/>
+                        <segue destination="wbD-Pf-tNw" kind="modal" identifier="setCurrentURL:" id="40N-gK-Na9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="N7K-vh-Rnt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="255" y="154"/>
+        </scene>
+        <!--Web View Controller-->
+        <scene sceneID="JOS-Ef-zpJ">
+            <objects>
+                <viewController id="wbD-Pf-tNw" customClass="WebViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kIw-YW-cMA">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <webView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fJj-HD-0bT">
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <dataDetectorType key="dataDetectorTypes"/>
+                            </webView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="blackTranslucent" translatesAutoresizingMaskIntoConstraints="NO" id="iMM-eY-DkT">
+                                <items>
+                                    <barButtonItem title="Cancel" id="PMV-8V-IQD">
+                                        <connections>
+                                            <segue destination="Ex8-BY-fOY" kind="unwind" identifier="dismissWebView" unwindAction="dismissWebView:" id="flc-Tp-BJl"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="uEc-6y-gIu"/>
+                        </subviews>
+                        <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="uEc-6y-gIu" firstAttribute="centerY" secondItem="iMM-eY-DkT" secondAttribute="centerY" type="default" id="3b2-yd-QlC"/>
+                            <constraint firstItem="iMM-eY-DkT" firstAttribute="leading" secondItem="kIw-YW-cMA" secondAttribute="leading" type="default" id="IeW-QU-mBw"/>
+                            <constraint firstItem="iMM-eY-DkT" firstAttribute="bottom" secondItem="kIw-YW-cMA" secondAttribute="bottom" type="default" id="NaQ-zd-4jm"/>
+                            <constraint firstItem="fJj-HD-0bT" firstAttribute="top" secondItem="kIw-YW-cMA" secondAttribute="top" type="default" id="Zl2-d6-ykF"/>
+                            <constraint firstItem="iMM-eY-DkT" firstAttribute="trailing" secondItem="kIw-YW-cMA" secondAttribute="trailing" type="default" id="elt-bH-OfS"/>
+                            <constraint firstItem="fJj-HD-0bT" firstAttribute="leading" secondItem="kIw-YW-cMA" secondAttribute="leading" type="default" id="g91-6t-hhX"/>
+                            <constraint firstItem="fJj-HD-0bT" firstAttribute="trailing" secondItem="kIw-YW-cMA" secondAttribute="trailing" type="default" id="pkE-Sy-hQW"/>
+                            <constraint firstAttribute="trailing" secondItem="uEc-6y-gIu" secondAttribute="trailing" constant="20" symbolic="YES" type="default" id="qKH-lP-HBW"/>
+                            <constraint firstItem="fJj-HD-0bT" firstAttribute="bottom" secondItem="kIw-YW-cMA" secondAttribute="bottom" type="default" id="r0u-wH-5Og"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="uEc-6y-gIu" id="QQ1-En-d2j"/>
+                        <outlet property="webView" destination="fJj-HD-0bT" id="OkG-bU-nfz"/>
+                        <segue destination="Ex8-BY-fOY" kind="unwind" identifier="doneAuthorize" unwindAction="done:" id="gxS-Tk-dBF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ocs-1G-pou" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="Ex8-BY-fOY" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="710" y="167"/>
+        </scene>
+    </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

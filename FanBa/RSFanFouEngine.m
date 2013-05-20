@@ -10,7 +10,7 @@
 
 
 // Never share this information
-#error Put your Consumer Key and Secret here, then remove this error
+#error Put your Consumer Key and Secrect here, then remove this error
 #define FA_CONSUMER_KEY @""
 #define FA_CONSUMER_SECRET @""
 
@@ -25,7 +25,7 @@
 #define FA_API_HOSTNAME @"http://api.fanfou.com/"
 
 // URL to redirect the user for authentication
-#define FA_AUTHORIZE(__TOKEN__,__CALLBACKURL__) [NSString stringWithFormat:@"https://fanfou.com/oauth/authorize?oauth_token=%@&oauth_callback=%@",__TOKEN__,__CALLBACKURL__]
+#define FA_AUTHORIZE(__TOKEN__,__CALLBACKURL__) [NSString stringWithFormat:@"http://fanfou.com/oauth/authorize?oauth_token=%@&oauth_callback=%@",__TOKEN__,__CALLBACKURL__]
 
 
 @interface RSFanFouEngine ()
@@ -174,7 +174,8 @@
     // OAuth Step 1 - Obtain a request token
     MKNetworkOperation *op = [self operationWithPath:FA_REQUEST_TOKEN
                                               params:nil
-                                          httpMethod:@"GET"];
+                                          httpMethod:@"GET"
+                                                 ssl:NO];
     
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         // Fill the request token with the return data
@@ -200,7 +201,9 @@
     
     // OAuth Step 3 - Exchange the request token with an access token
     MKNetworkOperation *op = [self operationWithPath:FA_ACCESS_TOKEN
-                                              params:nil httpMethod:@"GET"];
+                                              params:nil
+                                          httpMethod:@"GET"
+                                                 ssl:NO];
     
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         // Fill the access token with the returned data
@@ -265,7 +268,10 @@
                                        tweet, @"status",
                                        nil];
     
-    MKNetworkOperation *op = [self operationWithPath:FA_API_HOSTNAME params:postParams httpMethod:@"POST"];
+    // add fanfou version for send tweet 
+    MKNetworkOperation *op = [self operationWithURLString:[NSString stringWithFormat:@"%@%@",FA_API_HOSTNAME,FA_STATUS_UPDATE]
+                                              params:postParams
+                                          httpMethod:@"POST"];
     
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         completionBlock(nil);
