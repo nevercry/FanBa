@@ -1,10 +1,10 @@
 //
-//  hmac.h
-//  OAuthConsumer
+//  NSAlert+MKNetworkKitAdditions.h
+//  MKNetworkKitDemo
 //
-//  Created by Jonathan Wight on 4/8/8.
-//  Copyright 2008 Jonathan Wight. All rights reserved.
-//
+//  Created by Mugunth Kumar (@mugunthkumar) on 11/11/11.
+//  Copyright (C) 2011-2020 by Steinlogic Consulting and Training Pte Ltd
+
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -23,9 +23,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-#ifndef HMAC_H
-#define HMAC_H 1
+#if !TARGET_OS_IPHONE
+#import <AppKit/AppKit.h>
 
-extern void hmac_sha1(const unsigned char *inText, int inTextLength, unsigned char* inKey, const unsigned int inKeyLength, unsigned char *outDigest);
-
-#endif /* HMAC_H */
+@interface NSAlert (MKNetworkKitAdditions)
++(NSAlert*) showWithError:(NSError*) networkError;
+@end
+#endif

@@ -1,9 +1,10 @@
 //
-//  NSString+URLEncoding.h
+//  NSString+MKNetworkKitAdditions.h
+//  MKNetworkKitDemo
 //
-//  Created by Jon Crosby on 10/19/07.
-//  Copyright 2007 Kaboomerang LLC. All rights reserved.
-//
+//  Created by Mugunth Kumar (@mugunthkumar) on 11/11/11.
+//  Copyright (C) 2011-2020 by Steinlogic Consulting and Training Pte Ltd
+
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
 //  in the Software without restriction, including without limitation the rights
@@ -22,14 +23,10 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+@interface NSString (MKNetworkKitAdditions)
 
-#import <Foundation/Foundation.h>
-
-
-@interface NSString (OAURLEncodingAdditions)
-
-- (NSString *)encodedURLString;
-- (NSString *)encodedURLParameterString;
-- (NSString *)decodedURLString;
-- (NSString *)removeQuotes;
+- (NSString *) md5;
++ (NSString*) uniqueString;
+- (NSString*) mk_urlEncodedString;
+- (NSString*) urlDecodedString;
 @end
