@@ -15,7 +15,7 @@
 
 @property (nonatomic,retain) NSURL *currentURL;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+
 
 
 @end

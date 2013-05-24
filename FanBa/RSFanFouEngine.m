@@ -21,8 +21,11 @@
 #define FA_HOSTNAME @"fanfou.com"
 #define FA_REQUEST_TOKEN @"oauth/request_token"
 #define FA_ACCESS_TOKEN @"oauth/access_token"
-#define FA_STATUS_UPDATE @"statuses/update.json"
+
+// Fanfou API
 #define FA_API_HOSTNAME @"http://api.fanfou.com/"
+#define FA_STATUS_UPDATE @"statuses/update.json"
+#define FA_STATUS_HOME_LINE @"statuses/home_timeline.json"
 
 // URL to redirect the user for authentication
 #define FA_AUTHORIZE(__TOKEN__,__CALLBACKURL__) [NSString stringWithFormat:@"http://fanfou.com/oauth/authorize?oauth_token=%@&oauth_callback=%@",__TOKEN__,__CALLBACKURL__]
@@ -32,6 +35,7 @@
 
 @property (readwrite) RSFanFouEngineCompletionBlock OAuthCompletionBlock;
 @property (readwrite) NSString *screenName;
+@property (readwrite) NSArray *responseArray;
 
 
 
@@ -283,6 +287,44 @@
     [self enqueueSignedOperation:op];
     
 }
+
+
+- (void)showHomeLineWithCompletionBlock:(RSFanFouEngineCompletionBlockWithRespones)completionBlock
+{
+    if (!self.isAuthenticated) {
+        [self authenticateWithCompletionBlock:^(NSError *error) {
+            if (error) {
+                completionBlock(error,nil);
+            } else {
+                [self showHomeLineWithCompletionBlock:completionBlock];
+            }
+        }];
+        
+        return;
+    }
+    
+    
+    MKNetworkOperation *op = [self operationWithURLString:[NSString stringWithFormat:@"%@%@",FA_API_HOSTNAME,FA_STATUS_HOME_LINE]];
+    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        completionBlock(nil,completedOperation);
+        self.responseArray = completedOperation.responseJSON;
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        completionBlock(error,nil);
+    }];
+    
+    [self.delegate fanfouEngine:self statusUpdate:@"Home Line..."];
+    [self enqueueSignedOperation:op];
+}
+
+
+
+
+
+
+
+
+
+
 
 
 @end
