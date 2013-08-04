@@ -45,6 +45,7 @@
         user.isNotifications = info[FANFOU_USER_NOTIFICATIONS];
         user.created_at = info[FANFOU_USER_CREATED_AT];
         user.utc_offset = info[FANFOU_USER_UTC_OFFSET];
+        user.isUserAccount = @(NO);
     } else {
         user = [mathces lastObject];
     }

@@ -12,4 +12,5 @@
 
 + (User *)userWithInfo:(NSDictionary *)info inManangedObjectContext:(NSManagedObjectContext *)context;
 
+
 @end

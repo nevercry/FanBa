@@ -7,8 +7,10 @@
 //
 
 #import "CoreDataTableViewController.h"
+#import "RSFanFouEngine.h"
+#import "TTTAttributedLabel.h"
 
-@interface HomeLineCDTV : CoreDataTableViewController
+@interface HomeLineCDTV : CoreDataTableViewController<RSFanFouEngineDelegate,TTTAttributedLabelDelegate>
 
 @property (nonatomic,strong) NSManagedObjectContext *managedObjectContext;
 

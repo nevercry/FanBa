@@ -9,12 +9,8 @@
 #import "HomeLineCDTV.h"
 #import "RSFanFouEngine.h"
 
+
+
 @interface DemoViewCDTVC : HomeLineCDTV<RSFanFouEngineDelegate>
 
-@property (strong,nonatomic) RSFanFouEngine *fanfouEngine;
-
-- (IBAction)done:(UIStoryboardSegue *)segue;
-- (IBAction)dismissWebView:(UIStoryboardSegue *)segue;
-
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *autherSwitchButton;
 @end

@@ -12,6 +12,7 @@
 
 @property (readwrite,strong,nonatomic) UIManagedDocument *sharedDocument;
 
+
 @end
 
 @implementation FBCoreData
@@ -36,6 +37,15 @@
     }
     
     return _sharedDocument;
+}
+
+- (RSFanFouEngine *)fanfouEngine
+{
+    if (!_fanfouEngine) {
+        _fanfouEngine = [[RSFanFouEngine alloc] initWithDelegate:nil];
+    }
+    
+    return _fanfouEngine;
 }
 
 @end

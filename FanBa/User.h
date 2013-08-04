@@ -2,7 +2,7 @@
 //  User.h
 //  FanBa
 //
-//  Created by nevercry on 13-5-23.
+//  Created by nevercry on 13-7-25.
 //  Copyright (c) 2013年 nevercry. All rights reserved.
 //
 
@@ -28,10 +28,12 @@
 @property (nonatomic, retain) NSString * profile_image_url_large;
 @property (nonatomic, retain) NSString * screen_name;
 @property (nonatomic, retain) NSNumber * statuses_count;
+@property (nonatomic, retain) NSData * thumbnail;
 @property (nonatomic, retain) NSString * unique_id;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSString * user_despcription;
 @property (nonatomic, retain) NSNumber * utc_offset;
+@property (nonatomic, retain) NSNumber * isUserAccount;
 @property (nonatomic, retain) NSSet *statuses;
 @end
 

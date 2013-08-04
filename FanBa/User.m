@@ -2,7 +2,7 @@
 //  User.m
 //  FanBa
 //
-//  Created by nevercry on 13-5-23.
+//  Created by nevercry on 13-7-25.
 //  Copyright (c) 2013年 nevercry. All rights reserved.
 //
 
@@ -27,10 +27,12 @@
 @dynamic profile_image_url_large;
 @dynamic screen_name;
 @dynamic statuses_count;
+@dynamic thumbnail;
 @dynamic unique_id;
 @dynamic url;
 @dynamic user_despcription;
 @dynamic utc_offset;
+@dynamic isUserAccount;
 @dynamic statuses;
 
 @end

@@ -27,7 +27,7 @@
     
     
     if (!matches || ([matches count] >1)) {
-        NSLog(@"matches is nil %@",error);
+        NSLog(@"matches is bigger than 1");
     } else if (![matches count]) {
         status = [NSEntityDescription insertNewObjectForEntityForName:@"Status" inManagedObjectContext:context];
         status.unique_id = info[FANFOU_STATUS_ID];
@@ -46,7 +46,7 @@
         
         NSDictionary *userInfo = info[FANFOU_STATUS_USER];
         User *user = [User userWithInfo:userInfo inManangedObjectContext:context];
-        status.whoSented = user;
+        status.whoSent = user;
         
         NSDictionary *photoInfo = info[FANFOU_STATUS_PHOTO];
         Photo *photo = [Photo photoWithInfo:photoInfo inManangedObjectContext:context];
@@ -54,7 +54,6 @@
         NSLog(@"status done");
     } else {
         status = [matches lastObject];
-        NSLog(@"match status");
     }
 
     return status;

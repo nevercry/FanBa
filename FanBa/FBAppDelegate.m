@@ -7,6 +7,12 @@
 //
 
 #import "FBAppDelegate.h"
+#import "FBCoreData.h"
+#import "RSFanFouEngine.h"
+
+#define SHARED_FANFOU_ENGINE [FBCoreData sharedManagedDocument].fanfouEngine
+
+
 
 
 
@@ -44,5 +50,19 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    if ([[url scheme] isEqualToString:@"rsfanfouengine"])
+    {
+        if ([[url query] hasPrefix:@"denied"] ) {
+            if (SHARED_FANFOU_ENGINE) [SHARED_FANFOU_ENGINE cancelAuthentication];
+        } else {
+            if (SHARED_FANFOU_ENGINE) [SHARED_FANFOU_ENGINE resumeAuthenticationFlowWithURL:url];
+        }
+    }
+    return YES;
+}
+
 
 @end

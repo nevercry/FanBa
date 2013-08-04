@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RSFanFouEngine.h"
 
 @interface FBCoreData : NSObject
 
 @property (readonly,strong,nonatomic) UIManagedDocument *sharedDocument;
+@property (nonatomic,strong) RSFanFouEngine *fanfouEngine;
 
 + (FBCoreData *)sharedManagedDocument;
 

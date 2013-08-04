@@ -66,8 +66,6 @@ typedef void (^RSFanFouEngineCompletionBlockWithRespones) (NSError *error,MKNetw
 @property (assign) id <RSFanFouEngineDelegate> delegate;
 @property (readonly) NSString *screenName;
 
-//  add a new property for status
-@property (readonly) NSArray *responseArray;
 
 - (id)initWithDelegate:(id <RSFanFouEngineDelegate>)delegate;
 - (void)authenticateWithCompletionBlock:(RSFanFouEngineCompletionBlock)completionBlock;
@@ -75,7 +73,16 @@ typedef void (^RSFanFouEngineCompletionBlockWithRespones) (NSError *error,MKNetw
 - (void)cancelAuthentication;
 - (void)forgetStoredToken;
 - (void)sentTweet:(NSString *)tweet withCompletionBlock:(RSFanFouEngineCompletionBlock)completionBlock;
+
+
+// add fanfou new api method
+- (void)uploadPhoto:(NSData *)imageData status:(NSString *)status WithCompletionBlock:(RSFanFouEngineCompletionBlock)completionBlock;
+
 - (void)showHomeLineWithCompletionBlock:(RSFanFouEngineCompletionBlockWithRespones)completionBlock;
+- (void)showPublicTimeLineWithCompletionBlock:(RSFanFouEngineCompletionBlockWithRespones)completionBlock;
+- (void)usersShowWithCompletionBlock:(RSFanFouEngineCompletionBlockWithRespones)completionBlock;
+- (void)showUser:(NSString *)userNameID  WithCompletionBlock:(RSFanFouEngineCompletionBlockWithRespones)completionBlock;
+- (void)showFollowers:(NSString *)userNameID withCompletionBlock:(RSFanFouEngineCompletionBlockWithRespones)completionBlock;
 
 @end
 

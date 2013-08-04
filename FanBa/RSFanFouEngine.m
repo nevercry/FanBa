@@ -10,7 +10,6 @@
 
 
 // Never share this information
-#error Put your Consumer Key and Secrect here, then remove this error
 #define FA_CONSUMER_KEY @""
 #define FA_CONSUMER_SECRET @""
 
@@ -26,6 +25,12 @@
 #define FA_API_HOSTNAME @"http://api.fanfou.com/"
 #define FA_STATUS_UPDATE @"statuses/update.json"
 #define FA_STATUS_HOME_LINE @"statuses/home_timeline.json"
+#define FA_STATUS_PUBLIC_TIME_LINE @"statuses/public_timeline.json"
+
+#define FA_USERS_SHOW @"users/show.json"
+#define FA_USERS_FOLLOWERS @"users/followers.json"
+
+#define FA_PHOTOS_UPLOAD @"photos/upload.json"
 
 // URL to redirect the user for authentication
 #define FA_AUTHORIZE(__TOKEN__,__CALLBACKURL__) [NSString stringWithFormat:@"http://fanfou.com/oauth/authorize?oauth_token=%@&oauth_callback=%@",__TOKEN__,__CALLBACKURL__]
@@ -212,6 +217,7 @@
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         // Fill the access token with the returned data
         [self fillTokenWithResponseBody:[completedOperation responseString] type:RSOAuthAccessToken];
+        NSLog(@"responseString %@",[completedOperation responseString]);
         
         // Retrieve the user's screen name
         self.screenName = [self customValueForKey:@"screen_name"];
@@ -229,6 +235,7 @@
     
     [self.delegate fanfouEngine:self statusUpdate:@"Authenticating..."];
     [self enqueueSignedOperation:op];
+    
 }
 
 - (void)cancelAuthentication
@@ -288,6 +295,30 @@
     
 }
 
+- (void)uploadPhoto:(NSData *)imageData status:(NSString *)status WithCompletionBlock:(RSFanFouEngineCompletionBlock)completionBlock
+{
+    // Fill the post body with the tweet
+    NSMutableDictionary *postParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       status, @"status",
+                                       nil];
+    
+    // add fanfou version for send tweet
+    MKNetworkOperation *op = [self operationWithURLString:[NSString stringWithFormat:@"%@%@",FA_API_HOSTNAME,FA_PHOTOS_UPLOAD]
+                                                   params:postParams
+                                               httpMethod:@"POST"];
+    
+    [op addData:imageData forKey:@"photo"];
+    
+    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        completionBlock(nil);
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        completionBlock(error);
+    }];
+    
+    [self.delegate fanfouEngine:self statusUpdate:@"uploading photo..."];
+    [self enqueueSignedOperation:op];
+}
+
 
 - (void)showHomeLineWithCompletionBlock:(RSFanFouEngineCompletionBlockWithRespones)completionBlock
 {
@@ -304,10 +335,11 @@
     }
     
     
-    MKNetworkOperation *op = [self operationWithURLString:[NSString stringWithFormat:@"%@%@",FA_API_HOSTNAME,FA_STATUS_HOME_LINE]];
+    MKNetworkOperation *op = [self operationWithURLString:[NSString stringWithFormat:@"%@%@",FA_API_HOSTNAME,FA_STATUS_HOME_LINE]
+                                                   params:[NSDictionary dictionaryWithObject:@"html" forKey:@"format"]
+                                               httpMethod:@"GET"];
     [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
         completionBlock(nil,completedOperation);
-        self.responseArray = completedOperation.responseJSON;
     } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
         completionBlock(error,nil);
     }];
@@ -316,8 +348,78 @@
     [self enqueueSignedOperation:op];
 }
 
+- (void)showPublicTimeLineWithCompletionBlock:(RSFanFouEngineCompletionBlockWithRespones)completionBlock
+{
+    if (!self.isAuthenticated) {
+        [self authenticateWithCompletionBlock:^(NSError *error) {
+            if (error) {
+                completionBlock(error,nil);
+            } else {
+                [self showPublicTimeLineWithCompletionBlock:completionBlock];
+            }
+        }];
+        
+        return;
+    }
+    
+    MKNetworkOperation *op = [self operationWithURLString:[NSString stringWithFormat:@"%@%@",FA_API_HOSTNAME,FA_STATUS_PUBLIC_TIME_LINE]
+                                                   params:[NSDictionary dictionaryWithObject:@"html" forKey:@"format"]
+                                               httpMethod:@"GET"];
+                              
+    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        completionBlock(nil,completedOperation);
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        completionBlock(error,nil);
+    }];
+    
+    [self.delegate fanfouEngine:self statusUpdate:@"Public timeline..."];
+    [self enqueueSignedOperation:op];
+}
 
 
+- (void)usersShowWithCompletionBlock:(RSFanFouEngineCompletionBlockWithRespones)completionBlock
+{
+    MKNetworkOperation *op = [self operationWithURLString:[NSString stringWithFormat:@"%@%@",FA_API_HOSTNAME,FA_USERS_SHOW] params:nil httpMethod:@"GET"];
+    
+    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        completionBlock(nil,completedOperation);
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        completionBlock(error,nil);
+    }];
+
+    [self.delegate fanfouEngine:self statusUpdate:@"users_show"];
+    [self enqueueSignedOperation:op];
+}
+
+- (void)showUser:(NSString *)userNameID  WithCompletionBlock:(RSFanFouEngineCompletionBlockWithRespones)completionBlock
+{
+    NSDictionary *userNameParam = [NSDictionary dictionaryWithObject:userNameID forKey:@"id"];
+    MKNetworkOperation *op = [self operationWithURLString:[NSString stringWithFormat:@"%@%@",FA_API_HOSTNAME,FA_USERS_SHOW] params:userNameParam httpMethod:@"GET"];
+    
+    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        completionBlock(nil,completedOperation);
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        completionBlock(error,nil);
+    }];
+    
+    [self.delegate fanfouEngine:self statusUpdate:@"users_show"];
+    [self enqueueSignedOperation:op];
+}
+
+- (void)showFollowers:(NSString *)userNameID withCompletionBlock:(RSFanFouEngineCompletionBlockWithRespones)completionBlock
+{
+    NSDictionary *userNamePara = [NSDictionary dictionaryWithObject:userNameID forKey:@"id"];
+    MKNetworkOperation *op = [self operationWithURLString:[NSString stringWithFormat:@"%@%@",FA_API_HOSTNAME,FA_USERS_FOLLOWERS] params:userNamePara httpMethod:@"GET"];
+    
+    [op addCompletionHandler:^(MKNetworkOperation *completedOperation) {
+        completionBlock(nil,completedOperation);
+    } errorHandler:^(MKNetworkOperation *completedOperation, NSError *error) {
+        completionBlock(error,nil);
+    }];
+    
+    [self.delegate fanfouEngine:self statusUpdate:@"users_followers"];
+    [self enqueueSignedOperation:op];
+}
 
 
 

@@ -12,32 +12,54 @@
 #import "WebViewController.h"
 #import "User+Created.h"
 #import "Photo+Created.h"
+#import <QuartzCore/QuartzCore.h>
+
+#define SHARED_FANFOU_ENGINE [FBCoreData sharedManagedDocument].fanfouEngine
 
 @interface DemoViewCDTVC ()
+@property (nonatomic,strong) User *account;
+
+
 
 @end
 
 @implementation DemoViewCDTVC
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+
+- (void)setAccount:(User *)account
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
+    _account = account;
+    NSURL *url = [NSURL URLWithString:account.profile_image_url];
+    dispatch_queue_t imageQueue = dispatch_queue_create("image fetch", NULL);
+    dispatch_async(imageQueue, ^{
+        NSData *imageData = [NSData dataWithContentsOfURL:url];
+        _account.thumbnail = imageData;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (_account.thumbnail) {
+                UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+                UIImage *thumbnailImage = [UIImage imageWithData:_account.thumbnail];
+                
+                [button setImage:thumbnailImage forState:UIControlStateNormal];
+                button.imageView.layer.cornerRadius = 5.0;
+                button.imageView.layer.masksToBounds = YES;
+                button.imageView.layer.borderWidth = 0.5;
+                button.imageView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+                
+                
+                button.frame = CGRectMake(0, 0, 30, 30);
+                [button addTarget:self action:@selector(showAccountView) forControlEvents:UIControlEventTouchUpInside];
+                
+                
+                NSLog(@"self account is %@",_account);
+                
+                
+                UIBarButtonItem *accountBarButton = [[UIBarButtonItem alloc] initWithCustomView:button];
+                accountBarButton.style = UIBarButtonItemStyleBordered;
+                self.navigationItem.leftBarButtonItem = accountBarButton;
+            }
+        });
+    });
 }
-
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-
-
-
 
 
 - (void)viewDidLoad
@@ -46,8 +68,6 @@
     [self.refreshControl addTarget:self
                             action:@selector(refresh)
                   forControlEvents:UIControlEventValueChanged];
-    
-    self.fanfouEngine = [[RSFanFouEngine alloc] initWithDelegate:self];    
 }
 
 
@@ -60,25 +80,27 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    // check if the user is already authenticated
-    if (self.fanfouEngine.isAuthenticated) {
-        self.autherSwitchButton.title = @"Signed in";
-        NSLog(@"is authenticated");
+    SHARED_FANFOU_ENGINE.delegate = self;
+    // alway check fanfouEngine isAuthenticated
+    if (![SHARED_FANFOU_ENGINE isAuthenticated]) {
+        self.fetchedResultsController = nil; // clear fetched Results
+        self.account = nil; // clear account button
+        self.navigationItem.leftBarButtonItem = nil;
+        [self performSegueWithIdentifier:@"needToLogin" sender:self];
+        
     } else {
-        self.autherSwitchButton.title = @"Not signed in.";
-        NSLog(@"start oauth");
-    }
-    [self.fanfouEngine showHomeLineWithCompletionBlock:^(NSError *error, MKNetworkOperation *response) {
-        if (error) {
-            NSLog(@"home line error %@",error);
-        } else {
-            if (self.fanfouEngine.responseArray && self.managedObjectContext) {
-                for (NSDictionary*statusInfo in self.fanfouEngine.responseArray) {
-                    [Status statusWithInfo:statusInfo inManagedObjectContext:self.managedObjectContext];
+        [self refresh];
+        if (!self.account) {
+            [SHARED_FANFOU_ENGINE usersShowWithCompletionBlock:^(NSError *error, MKNetworkOperation *response) {
+                if (error) {
+                    NSLog(@"users show error %@",error);
+                } else {
+                    NSDictionary *userInfo = response.responseJSON;
+                    self.account = [User userWithInfo:userInfo inManangedObjectContext:self.managedObjectContext];
                 }
-            }
+            }];
         }
-    }];
+    }
 }
 
 - (void)useFanBaDocument
@@ -113,12 +135,12 @@
 - (void)refresh
 {
     [self.refreshControl beginRefreshing];
-    [self.fanfouEngine showHomeLineWithCompletionBlock:^(NSError *error, MKNetworkOperation *response) {
+    [SHARED_FANFOU_ENGINE showHomeLineWithCompletionBlock:^(NSError *error, MKNetworkOperation *response) {
             if (error) {
                 NSLog(@"home line error %@",error);
             } else {
-                if (self.fanfouEngine.responseArray && self.managedObjectContext) {
-                    for (NSDictionary*statusInfo in self.fanfouEngine.responseArray) {
+                if (self.managedObjectContext) {
+                    for (NSDictionary*statusInfo in (NSArray *)response.responseJSON) {
                         [Status statusWithInfo:statusInfo inManagedObjectContext:self.managedObjectContext];
                     }
                 }
@@ -130,61 +152,16 @@
 #pragma mark - RSFanFouEngine Delegate Methods
 - (void)fanfouEngine:(RSFanFouEngine *)engine needsToOpenURL:(NSURL *)url
 {
-    [self performSegueWithIdentifier:@"setCurrentURL:" sender:url];
 }
 
 - (void)fanfouEngine:(RSFanFouEngine *)engine statusUpdate:(NSString *)message
 {
-    self.autherSwitchButton.title = message;
 }
 
 #pragma mark - Custom Method
 
-- (IBAction)unSignin:(UIBarButtonItem *)sender {
-    if (self.fanfouEngine) [self.fanfouEngine forgetStoredToken];
-    self.autherSwitchButton.title = @"Not signed in.";
-    
-    
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Status" inManagedObjectContext:self.managedObjectContext];
-    [fetchRequest setEntity:entity];
-    NSError *error;
-    NSArray *items = [self.managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    NSLog(@"error is %@",error);
-    
-    
-    for (Status *managedObject in items) {
-    	[self.managedObjectContext deleteObject:managedObject];
-    	NSLog(@"status object deleted");
-    }
-    if (![self.managedObjectContext save:&error]) {
-    	NSLog(@"Error deleting  - error:%@",error);
-    }
-    
-    [self.fanfouEngine showHomeLineWithCompletionBlock:^(NSError *error, MKNetworkOperation *response) {
-        if (error) {
-            NSLog(@"home line error %@",error);
-        } else {
-            if (self.fanfouEngine.responseArray && self.managedObjectContext) {
-                for (NSDictionary*statusInfo in self.fanfouEngine.responseArray) {
-                    [Status statusWithInfo:statusInfo inManagedObjectContext:self.managedObjectContext];
-                }
-            }
-        }
-    }];
-}
-
 #pragma mark - Segue
 
-- (IBAction)done:(UIStoryboardSegue *)segue
-{
-    WebViewController *vc = (WebViewController *)segue.sourceViewController;
-    if ([vc.currentURL.query hasPrefix:@"denied"]) {
-        if (self.fanfouEngine) [self.fanfouEngine cancelAuthentication];
-    } else {
-        if (self.fanfouEngine) [self.fanfouEngine resumeAuthenticationFlowWithURL:vc.currentURL];
-    }
-}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -194,18 +171,24 @@
             [vc performSelector:@selector(setCurrentURL:) withObject:sender];
         }
     }
+    
+    if ([segue.identifier isEqualToString:@"showAccount"]) {
+        if ([segue.destinationViewController respondsToSelector:@selector(setUser:)]) {
+            [segue.destinationViewController performSelector:@selector(setUser:) withObject:self.account];
+        }
+    }
 }
 
-
-- (IBAction)dismissWebView:(UIStoryboardSegue *)segue
+- (IBAction)done:(UIStoryboardSegue *)segue
 {
-    if (self.fanfouEngine) [self.fanfouEngine cancelAuthentication];
+    
 }
 
 
-
-
-
+- (void)showAccountView
+{
+    [self performSegueWithIdentifier:@"showAccount" sender:self];
+}
 
 
 
