@@ -10,8 +10,8 @@
 
 
 // Never share this information
-#define FA_CONSUMER_KEY @""
-#define FA_CONSUMER_SECRET @""
+#define FA_CONSUMER_KEY @"f5f9a83cabba602020c02f61ec87dd39"
+#define FA_CONSUMER_SECRET @"5f55d62f6cc8f65085a0aa74c887a027"
 
 // This will be called after the user authorizes your app
 #define FA_CALLBACK_URL @"rsfanfouengine://auth_token"
