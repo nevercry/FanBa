@@ -158,7 +158,7 @@
         [SHARED_FANFOU_ENGINE showUser:self.userName WithCompletionBlock:^(NSError *error, MKNetworkOperation *response) {
             if (error) {
                 NSLog(@"show user error %@",error);
-                [SVProgressHUD dismissWithError:@"载入失败"];
+                [SVProgressHUD dismiss];
                 [self.navigationController performSelector:@selector(popViewControllerAnimated:) withObject:@(YES) afterDelay:1];
             } else {
                 NSDictionary *userInfo = response.responseJSON;
