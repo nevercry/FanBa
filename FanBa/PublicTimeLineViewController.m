@@ -205,9 +205,17 @@
     
     //-------------------------------------------------
     
-    CGSize size = [replacedString sizeWithFont:[UIFont systemFontOfSize:16.0f] constrainedToSize:constraint lineBreakMode:NSLineBreakByCharWrapping];
     
-    CGFloat height = MAX(size.height,20.0f);
+    NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
+    
+    NSDictionary *attributeDic = @{NSFontAttributeName: [UIFont systemFontOfSize:16]};
+    
+    CGRect rect = [replacedString boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin attributes:attributeDic context:context];
+    
+    CGFloat height = ceil(rect.size.height);
+
+    
+     height = MAX(height,20.0f);
     
     return height + 40.0f;
     

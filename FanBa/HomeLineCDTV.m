@@ -72,8 +72,19 @@
     
     
     
-    CGSize size = [htmlToTextstr sizeWithFont:[UIFont boldSystemFontOfSize:16] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-    CGFloat height = MAX(size.height,35);
+    
+    
+    NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
+    
+    NSDictionary *attributeDic = @{NSFontAttributeName: [UIFont systemFontOfSize:16]};
+    
+    CGRect rect = [htmlToTextstr boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin attributes:attributeDic context:context];
+    
+    CGFloat height = ceil(rect.size.height);
+
+    
+    
+     height = MAX(height,35);
     
     
     

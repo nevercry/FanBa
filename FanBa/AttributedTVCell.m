@@ -86,7 +86,7 @@
         if (matchCounts) {
             for (int i = 0; i < matchCounts; i++) {
                 NSTextCheckingResult *textResult = [regexp firstMatchInString:[mutableAttributedString string] options:0 range:NSMakeRange(0, [mutableAttributedString length])];
-                NSString *matchStringURLString = [[mutableAttributedString string] substringWithRange:[textResult rangeAtIndex:1]];
+                // NSString *matchStringURLString = [[mutableAttributedString string] substringWithRange:[textResult rangeAtIndex:1]];
                 NSString *matchString = [[mutableAttributedString string] substringWithRange:[textResult rangeAtIndex:2]];
                 
                 [mutableAttributedString replaceCharactersInRange:textResult.range withString:matchString];

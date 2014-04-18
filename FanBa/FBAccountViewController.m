@@ -135,8 +135,15 @@
 {
     if (indexPath.row == 1) {
         CGSize constraint = CGSizeMake((tableView.frame.size.width - 40.0f), 2008.0f);
-        CGSize size = [self.accountDescription.textLabel.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:constraint lineBreakMode:NSLineBreakByWordWrapping];
-        CGFloat height = size.height + 2;
+        
+        
+        NSStringDrawingContext *context = [[NSStringDrawingContext alloc] init];
+        
+        
+        NSDictionary *attributeDic = @{NSFontAttributeName: [UIFont systemFontOfSize:14]};
+        CGRect rect = [self.accountDescription.textLabel.text boundingRectWithSize:constraint options:NSStringDrawingUsesLineFragmentOrigin attributes:attributeDic context:context];
+        
+        CGFloat height = ceil(rect.size.height);
         
         return MAX(height, 70)  ;
     } else
