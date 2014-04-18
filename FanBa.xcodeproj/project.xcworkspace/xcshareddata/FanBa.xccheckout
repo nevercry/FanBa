@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>BBA5439A-1E3D-4CD6-86AA-205FA70A6378</string>
+	<key>IDESourceControlProjectName</key>
+	<string>FanBa</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D1230147-7162-4296-9066-ACBC0A0F0D85</key>
+		<string>https://github.com/nevercry/FanBa.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>FanBa.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D1230147-7162-4296-9066-ACBC0A0F0D85</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/nevercry/FanBa.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D1230147-7162-4296-9066-ACBC0A0F0D85</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D1230147-7162-4296-9066-ACBC0A0F0D85</string>
+			<key>IDESourceControlWCCName</key>
+			<string>FanBa</string>
+		</dict>
+	</array>
+</dict>
+</plist>

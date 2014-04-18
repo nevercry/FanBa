@@ -280,13 +280,13 @@
     NSString *dateStr;
     
     if (dateInterval/(60*60*24) >= 1) {
-        dateStr = [NSString stringWithFormat:@"%d天",(dateInterval/(60*60*24))];
+        dateStr = [NSString stringWithFormat:@"%ld天",(dateInterval/(60*60*24))];
     } else {
         if (dateInterval/(60*60) >= 1 ) {
-            dateStr = [NSString stringWithFormat:@"%d时",dateInterval/(60*60)];
+            dateStr = [NSString stringWithFormat:@"%ld时",dateInterval/(60*60)];
         } else {
             if (dateInterval/60 >= 1 ) {
-                dateStr = [NSString stringWithFormat:@"%d分",dateInterval/60];
+                dateStr = [NSString stringWithFormat:@"%ld分",dateInterval/60];
             } else {
                 dateStr = @"刚刚";
             }

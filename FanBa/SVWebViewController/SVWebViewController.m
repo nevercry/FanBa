@@ -322,8 +322,8 @@
 }
 
 - (void)doneButtonClicked:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
-}
+    [self dismissViewControllerAnimated:YES completion:nil];
+     }
 
 #pragma mark -
 #pragma mark UIActionSheetDelegate
@@ -348,7 +348,7 @@
   		[mailViewController setMessageBody:self.mainWebView.request.URL.absoluteString isHTML:NO];
 		mailViewController.modalPresentationStyle = UIModalPresentationFormSheet;
         
-		[self presentModalViewController:mailViewController animated:YES];
+		[self  presentViewController:mailViewController animated:YES completion:nil];
 	}
     
     pageActionSheet = nil;
@@ -361,7 +361,7 @@
           didFinishWithResult:(MFMailComposeResult)result 
                         error:(NSError *)error 
 {
-	[self dismissModalViewControllerAnimated:YES];
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

@@ -121,7 +121,7 @@
     NSError *error;
     NSArray *items = [[FBCoreData sharedManagedDocument].sharedDocument.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     
-    NSLog(@"itmes count is %d",[items count]);
+    NSLog(@"itmes count is %lu",(unsigned long)[items count]);
     
     if ([items count] > 0 && [items count] < 2) {
         User *user = [items lastObject];
