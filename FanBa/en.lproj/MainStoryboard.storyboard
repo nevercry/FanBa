@@ -387,8 +387,8 @@
                             <rect key="frame" x="0.0" y="0.0" width="320" height="62"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mRQ-Rd-2cg">
-                                    <rect key="frame" x="0.0" y="18" width="320" height="44"/>
+                                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mRQ-Rd-2cg">
+                                    <rect key="frame" x="0.0" y="9" width="320" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                     <items>
                                         <barButtonItem title="取消" id="032-3u-BHJ">
@@ -405,6 +405,9 @@
                                             </connections>
                                         </barButtonItem>
                                     </items>
+                                    <connections>
+                                        <outlet property="delegate" destination="SQl-jm-7Hf" id="NOA-1N-0ZS"/>
+                                    </connections>
                                 </toolbar>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
